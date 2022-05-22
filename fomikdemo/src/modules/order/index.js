@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Alert, Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Alert, Button, Col, Form, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,6 +16,14 @@ const Order = () => {
     const [message, setMessage] = useState("");
     const formik = useFormik({
         initialValues: initialValues,
+        validate: (values) => {
+            const errors = {};
+            if (values.cityFrom === "") errors.cityFrom = "Поле 'Откуда' не заполненно";
+            if (values.cityTo === "") errors.cityTo = "Поле 'Куда' не заполненно";
+            if (values.cityFrom.length < 3) errors.cityFrom = "В поле 'Откуда' должно быть минимум 3 символа";
+            if (values.cityTo.length < 3) errors.cityTo = "В поле 'Куда' должно быть минимум 3 символа";
+            return errors;
+        },
         onSubmit: (values, { setSubmitting }) => {
             setShowAlert(false);
             setIsSubmitted(false);
