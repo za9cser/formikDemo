@@ -1,14 +1,25 @@
 import { TextField } from "@mui/material";
-import { useFormik } from "formik";
+import { useFormik, yupToFormErrors } from "formik";
 import React, { useState } from "react";
 import { Alert, Button, Col, Form, FormFeedback, FormGroup, FormText, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
+import * as Yup from "yup";
+
+const orderSchema = Yup.object().shape({
+    cityFrom: Yup.string().min(3, "Минимум 3 символа").max(50, "Максимум 5 символов").required("Город обязателен"),
+    cityTo: Yup.string().min(3, "Минимум 3 символа").max(50, "Максимум 5 символов").required("Город обязателен"),
+    phone: Yup.string().when(["cityFrom", "cityTo"], {
+        is: (cityFrom, cityTo) => cityFrom !== cityTo,
+        then: Yup.string().required("Телефон обязателен, если разные города"),
+    }),
+});
 
 const initialValues = {
     cityFrom: "",
     cityTo: "",
+    phone: "",
 };
 
 const Order = () => {
@@ -17,14 +28,25 @@ const Order = () => {
     const [message, setMessage] = useState("");
     const formik = useFormik({
         initialValues: initialValues,
-        validate: (values) => {
-            const errors = {};
-            if (values.cityFrom === "") errors.cityFrom = "Поле 'Откуда' не заполненно";
-            else if (values.cityFrom.length < 3) errors.cityFrom = "В поле 'Откуда' должно быть минимум 3 символа";
-            if (values.cityTo === "") errors.cityTo = "Поле 'Куда' не заполненно";
-            else if (values.cityTo.length < 3) errors.cityTo = "В поле 'Куда' должно быть минимум 3 символа";
-            return errors;
-        },
+        validationSchema: orderSchema,
+        // validate: (values) => {
+        //     try {
+        //         orderSchema.validateSync(values);
+        //     } catch (yupError) {
+        //         console.log("yupError", yupError);
+        //         const errors = yupToFormErrors(yupError);
+        //         console.log("errors", errors);
+        //         return errors;
+        //     }
+
+        //     const errors = {};
+        //     if (Object.keys(errors).some()) return errors;
+        //     if (values.cityFrom === "") errors.cityFrom = "Поле 'Откуда' не заполненно";
+        //     else if (values.cityFrom.length < 3) errors.cityFrom = "В поле 'Откуда' должно быть минимум 3 символа";
+        //     if (values.cityTo === "") errors.cityTo = "Поле 'Куда' не заполненно";
+        //     else if (values.cityTo.length < 3) errors.cityTo = "В поле 'Куда' должно быть минимум 3 символа";
+        //     return errors;
+        // },
         onSubmit: (values, { setSubmitting }) => {
             setShowAlert(false);
             setIsSubmitted(false);
@@ -82,6 +104,26 @@ const Order = () => {
                 />
                 {formik.errors.cityTo && formik.touched.cityTo && (
                     <small className="text-danger">{formik.errors.cityTo}</small>
+                )}
+            </Row>
+            <Row className="my-3">
+                <label>Телефон</label>
+                <input
+                    name="phone"
+                    placeholder="телефон"
+                    size="small"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.phone}
+                    disabled={formik.isSubmitting}
+                    autoComplete="off"
+                    className={clsx(
+                        formik.touched.phone && formik.errors.phone && "border border-danger",
+                        formik.touched.phone && !formik.errors.phone && "border border-success"
+                    )}
+                />
+                {formik.errors.phone && formik.touched.phone && (
+                    <small className="text-danger">{formik.errors.phone}</small>
                 )}
             </Row>
             <Row className="my-3 justify-content-around">
