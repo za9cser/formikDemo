@@ -1,10 +1,8 @@
-import { TextField } from "@mui/material";
-import { Form, Formik, useFormik, yupToFormErrors } from "formik";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import { Alert, Button, Col, FormFeedback, FormGroup, FormText, Row } from "reactstrap";
+import { Alert, Button, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import clsx from "clsx";
 import * as Yup from "yup";
 import CustomField from "../../components/inputs/CustomField";
 
@@ -14,8 +12,12 @@ const orderSchema = Yup.object().shape({
 });
 
 const initialValues = {
+    countryFrom: "",
     cityFrom: "",
+    countryTo: "",
     cityTo: "",
+    weight: "",
+    takeDate: "",
 };
 
 const Order = () => {
@@ -44,10 +46,22 @@ const Order = () => {
                         <h5>Новый заказ</h5>
                     </Row>
                     <Row className="my-3">
-                        <CustomField name="cityFrom" label="Откуда" placeholder="Откуда" />
+                        <CustomField name="countryFrom" label="Страна" placeholder="Откуда" />
                     </Row>
                     <Row className="my-3">
-                        <CustomField name="cityTo" label="Куда" placeholder="Куда" />
+                        <CustomField name="cityFrom" label="Город" placeholder="Куда" />
+                    </Row>
+                    <Row className="my-3">
+                        <CustomField name="countryTo" label="Страна" placeholder="Откуда" />
+                    </Row>
+                    <Row className="my-3">
+                        <CustomField name="cityTo" label="Город" placeholder="Куда" />
+                    </Row>
+                    <Row className="my-3">
+                        <CustomField name="weight" label="Вес" placeholder="Откуда" />
+                    </Row>
+                    <Row className="my-3">
+                        <CustomField name="takeDate" label="Дата забора" placeholder="Куда" />
                     </Row>
                     <Row className="my-3 justify-content-around">
                         <Col className="text-center">
