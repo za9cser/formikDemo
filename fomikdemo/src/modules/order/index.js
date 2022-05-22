@@ -34,26 +34,25 @@ const Order = () => {
                 <h5>Новый заказ</h5>
             </Row>
             <Row className="my-3">
-                <TextField
+                <label>Откуда</label>
+                <input
                     name="cityFrom"
                     label="Откуда"
                     placeholder="Откуда"
                     size="small"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     value={formik.values.cityFrom}
                     disabled={formik.isSubmitting}
                     autoComplete="off"
                 />
             </Row>
             <Row className="my-3">
-                <TextField
+                <label>Куда</label>
+                <input
                     name="cityTo"
-                    label="Куда"
                     placeholder="Куда"
                     size="small"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     value={formik.values.cityTo}
                     disabled={formik.isSubmitting}
                     autoComplete="off"
