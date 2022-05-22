@@ -26,6 +26,19 @@ const Order = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [message, setMessage] = useState("");
+
+    const handleSubmit = (values, { setSubmitting }) => {
+        alert(setSubmitting);
+        setShowAlert(false);
+        setIsSubmitted(false);
+        setTimeout(() => {
+            setMessage(`Создано: ${values.cityFrom} -> ${values.cityTo}`);
+            setSubmitting(false);
+            setShowAlert(true);
+            setIsSubmitted(true);
+        }, 4000);
+    };
+
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: orderSchema,
@@ -47,16 +60,7 @@ const Order = () => {
         //     else if (values.cityTo.length < 3) errors.cityTo = "В поле 'Куда' должно быть минимум 3 символа";
         //     return errors;
         // },
-        onSubmit: (values, { setSubmitting }) => {
-            setShowAlert(false);
-            setIsSubmitted(false);
-            setTimeout(() => {
-                setMessage(`Создано: ${values.cityFrom} -> ${values.cityTo}`);
-                setSubmitting(false);
-                setShowAlert(true);
-                setIsSubmitted(true);
-            }, 4000);
-        },
+        onSubmit: handleSubmit,
     });
 
     return (
@@ -127,18 +131,30 @@ const Order = () => {
                 )}
             </Row>
             <Row className="my-3 justify-content-around">
-                <Col className={isSubmitted ? "text-end" : "text-center"}>
+                <Col className="text-center">
                     <Button type="submit" color="primary" disabled={formik.isSubmitting}>
                         {formik.isSubmitting && <FontAwesomeIcon icon={faSpinner} spin className="me-1" />}
                         Создать
                     </Button>
                 </Col>
+                <Col className="text-center">
+                    <Button
+                        type="button"
+                        disabled={formik.isSubmitting}
+                        onClick={(e) => {
+                            handleSubmit(formik.values, formik);
+                        }}
+                    >
+                        {formik.isSubmitting && <FontAwesomeIcon icon={faSpinner} spin className="me-1" />}
+                        Создать черновик
+                    </Button>
+                </Col>
 
                 {isSubmitted && (
-                    <Col className="text-start">
+                    <Col className="text-center">
                         <Button
                             type="button"
-                            disabled={formik.isSubmitting || !formik.isValid}
+                            disabled={formik.isSubmitting}
                             onClick={() => {
                                 setShowAlert(false);
                                 setIsSubmitted(false);
