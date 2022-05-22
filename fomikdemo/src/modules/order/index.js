@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Alert, Button, Col, Form, FormFeedback, FormGroup, FormText, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import clsx from "clsx";
 
 const initialValues = {
     cityFrom: "",
@@ -49,13 +50,19 @@ const Order = () => {
                     placeholder="Откуда"
                     size="small"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.cityFrom}
                     disabled={formik.isSubmitting}
                     error={formik.errors.cityFrom}
                     autoComplete="off"
-                    className={formik.errors.cityFrom ? "border border-danger" : "border border-success"}
+                    className={clsx(
+                        formik.touched.cityFrom && formik.errors.cityFrom && "border border-danger",
+                        formik.touched.cityFrom && !formik.errors.cityFrom && "border border-success"
+                    )}
                 />
-                {formik.errors.cityFrom && <small className="text-danger">{formik.errors.cityFrom}</small>}
+                {formik.errors.cityFrom && formik.touched.cityFrom && (
+                    <small className="text-danger">{formik.errors.cityFrom}</small>
+                )}
             </Row>
             <Row className="my-3">
                 <label>Куда</label>
@@ -64,12 +71,18 @@ const Order = () => {
                     placeholder="Куда"
                     size="small"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.cityTo}
                     disabled={formik.isSubmitting}
                     autoComplete="off"
-                    className={formik.errors.cityTo ? "border border-danger" : "border border-success"}
+                    className={clsx(
+                        formik.touched.cityTo && formik.errors.cityTo && "border border-danger",
+                        formik.touched.cityTo && !formik.errors.cityTo && "border border-success"
+                    )}
                 />
-                {formik.errors.cityTo && <small className="text-danger">{formik.errors.cityTo}</small>}
+                {formik.errors.cityTo && formik.touched.cityTo && (
+                    <small className="text-danger">{formik.errors.cityTo}</small>
+                )}
             </Row>
             <Row className="my-3 justify-content-around">
                 <Col className={isSubmitted ? "text-end" : "text-center"}>
@@ -83,7 +96,7 @@ const Order = () => {
                     <Col className="text-start">
                         <Button
                             type="button"
-                            disabled={formik.isSubmitting}
+                            disabled={formik.isSubmitting || !formik.isValid}
                             onClick={() => {
                                 setShowAlert(false);
                                 setIsSubmitted(false);
