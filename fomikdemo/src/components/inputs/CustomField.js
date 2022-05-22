@@ -10,7 +10,7 @@ export default function CustomField({ label, required, ...props }) {
             label={label}
             {...field}
             {...props}
-            inputProps={{ autocomplete: "off", pattern: field.pattern }}
+            inputProps={{ autoComplete: "off", pattern: field.pattern }}
             error={meta.touched && meta.error}
             color={meta.touched && !meta.error && "success"}
             helperText={meta.error}

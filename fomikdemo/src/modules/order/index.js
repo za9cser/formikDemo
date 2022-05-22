@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
 import CustomField from "../../components/inputs/CustomField";
+import CustomDatePicker from "../../components/inputs/CustomDatePicker";
 
 const orderSchema = Yup.object().shape({
     cityFrom: Yup.string().min(3, "Минимум 3 символа").max(50, "Максимум 5 символов").required("Город обязателен"),
@@ -61,7 +62,7 @@ const Order = () => {
                         <CustomField name="weight" label="Вес" placeholder="Вес" />
                     </Row>
                     <Row className="my-3">
-                        <CustomField name="takeDate" label="Дата забора" placeholder="Дата забора" />
+                        <CustomDatePicker name="takeDate" label="Дата забора" placeholder="Дата забора" />
                     </Row>
                     <Row className="my-3 justify-content-around">
                         <Col className="text-center">
