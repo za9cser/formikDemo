@@ -58,10 +58,10 @@ const Order = () => {
                         <CustomField name="cityTo" label="Город" placeholder="Куда" />
                     </Row>
                     <Row className="my-3">
-                        <CustomField name="weight" label="Вес" placeholder="Откуда" />
+                        <CustomField name="weight" label="Вес" placeholder="Вес" />
                     </Row>
                     <Row className="my-3">
-                        <CustomField name="takeDate" label="Дата забора" placeholder="Куда" />
+                        <CustomField name="takeDate" label="Дата забора" placeholder="Дата забора" />
                     </Row>
                     <Row className="my-3 justify-content-around">
                         <Col className="text-center">
