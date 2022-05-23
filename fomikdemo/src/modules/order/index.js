@@ -1,24 +1,25 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
 import React, { useState } from "react";
 import { Alert, Button, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import * as Yup from "yup";
-import CustomField from "../../components/inputs/CustomField";
-import CustomDatePicker from "../../components/inputs/CustomDatePicker";
+import * as yup from "yup";
+import Contact, * as contact from "./contact";
+import Cargo, * as cargo from "./cargo";
+import Options, * as options from "./options";
 
-const orderSchema = Yup.object().shape({
-    cityFrom: Yup.string().min(3, "Минимум 3 символа").max(50, "Максимум 5 символов").required("Город обязателен"),
-    cityTo: Yup.string().min(3, "Минимум 3 символа").max(50, "Максимум 5 символов").required("Город обязателен"),
+const orderSchema = yup.object().shape({
+    sender: { ...contact.Schema },
+    receiver: { ...contact.Schema },
+    cargo: { ...cargo.Sсhema },
+    options: { ...options.Sсhema },
 });
 
 const initialValues = {
-    countryFrom: "",
-    cityFrom: "",
-    countryTo: "",
-    cityTo: "",
-    weight: "",
-    takeDate: "",
+    sender: { ...contact.InitialValues },
+    receiver: { ...contact.InitialValues },
+    cargo: { ...cargo.InitialValues },
+    options: { ...options.InitialValues },
 };
 
 const Order = () => {
@@ -46,24 +47,11 @@ const Order = () => {
                     <Row>
                         <h5>Новый заказ</h5>
                     </Row>
-                    <Row className="my-3">
-                        <CustomField name="countryFrom" label="Страна" placeholder="Откуда" />
-                    </Row>
-                    <Row className="my-3">
-                        <CustomField name="cityFrom" label="Город" placeholder="Куда" />
-                    </Row>
-                    <Row className="my-3">
-                        <CustomField name="countryTo" label="Страна" placeholder="Откуда" />
-                    </Row>
-                    <Row className="my-3">
-                        <CustomField name="cityTo" label="Город" placeholder="Куда" />
-                    </Row>
-                    <Row className="my-3">
-                        <CustomField name="weight" label="Вес" placeholder="Вес" />
-                    </Row>
-                    <Row className="my-3">
-                        <CustomDatePicker name="takeDate" label="Дата забора" placeholder="Дата забора" />
-                    </Row>
+                    <Contact name="sender" isSender />
+                    <Contact name="receiver" />
+                    <Cargo name="cargo" />
+                    <Options name="options" />
+
                     <Row className="my-3 justify-content-around">
                         <Col className="text-center">
                             <Button type="submit" color="primary" disabled={formik.isSubmitting}>
