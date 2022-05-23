@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import React from "react";
 
 export default function CustomField({ label, required, ...props }) {
@@ -12,8 +12,9 @@ export default function CustomField({ label, required, ...props }) {
             {...props}
             inputProps={{ autoComplete: "off", pattern: field.pattern }}
             error={meta.touched && meta.error}
-            color={meta.touched && !meta.error && "success"}
+            color={meta.touched && !meta.error ? "success" : ""}
             helperText={meta.error}
+            required={required}
             size="small"
         />
     );
