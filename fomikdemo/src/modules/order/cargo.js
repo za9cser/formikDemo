@@ -3,16 +3,16 @@ import { Container, Row } from "reactstrap";
 import CustomField from "../../components/inputs/CustomField";
 import * as yup from "yup";
 
-export default function Cargo() {
+export default function Cargo({ name }) {
     return (
         <Container>
             <h6>Груз</h6>
             <Row className="my-3">
-                <CustomField name="weight" label="Вес" placeholder="Вес" required />
+                <CustomField name="weight" parentName={name} label="Вес" placeholder="Вес" required />
             </Row>
         </Container>
     );
 }
 
 export const InitialValues = { weight: "" };
-export const Sсhema = yup.string().required("Вес обязателен");
+export const Sсhema = { weight: yup.number().min(0.3, "Минимум 0.3 кг").required("Вес обязателен") };

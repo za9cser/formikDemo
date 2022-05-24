@@ -1,4 +1,4 @@
-import { Form, Formik, useFormikContext } from "formik";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Alert, Button, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,10 +9,10 @@ import Cargo, * as cargo from "./cargo";
 import Options, * as options from "./options";
 
 const orderSchema = yup.object().shape({
-    sender: { ...contact.Schema },
-    receiver: { ...contact.Schema },
-    cargo: { ...cargo.Sсhema },
-    options: { ...options.Sсhema },
+    sender: yup.object().shape(contact.Schema),
+    receiver: yup.object().shape(contact.Schema),
+    cargo: yup.object().shape(cargo.Sсhema),
+    options: yup.object().shape(options.Sсhema),
 });
 
 const initialValues = {
@@ -28,6 +28,7 @@ const Order = () => {
     const [message, setMessage] = useState("");
 
     const handleSubmit = (values, { setSubmitting }) => {
+        console.log("values", values);
         setSubmitting(true);
 
         setShowAlert(false);
