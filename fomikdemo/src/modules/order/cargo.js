@@ -15,4 +15,4 @@ export default function Cargo({ name }) {
 }
 
 export const InitialValues = { weight: "" };
-export const Sсhema = { weight: yup.number().min(0.3, "Минимум 0.3 кг").required("Вес обязателен") };
+export const Schema = { weight: yup.number().min(0.3, "Минимум 0.3 кг").required("Вес обязателен") };
