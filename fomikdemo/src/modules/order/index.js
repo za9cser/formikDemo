@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormik } from "formik";
 import React, { useState } from "react";
 import { Alert, Button, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Contact, * as contact from "./contact";
 import Cargo, * as cargo from "./cargo";
 import Options, * as options from "./options";
+import OrderForm from "./orderForm";
 
 const orderSchema = yup.object().shape({
     sender: yup.object().shape(contact.Schema),
@@ -54,10 +55,7 @@ const Order = () => {
                     <Row>
                         <h5>Новый заказ</h5>
                     </Row>
-                    <Contact name="sender" isSender />
-                    <Contact name="receiver" />
-                    <Cargo name="cargo" />
-                    <Options name="options" />
+                    <OrderForm />
 
                     <Row className="my-3 justify-content-around">
                         <Col className="text-center">
