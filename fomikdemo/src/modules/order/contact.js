@@ -1,10 +1,21 @@
-import { connect } from "formik";
-import React from "react";
+import { connect, useFormikContext } from "formik";
+import React, { useEffect } from "react";
 import { Container, Row } from "reactstrap";
 import * as yup from "yup";
 import CustomField from "../../components/inputs/CustomField";
+import { getName } from "../../utils/utils";
 
 const Contact = ({ name, isSender }) => {
+    const formik = useFormikContext();
+    const country = formik.values?.getProp("country", name);
+    const city = formik.values?.getProp("city", name);
+
+    useEffect(() => {
+        if (city !== "") {
+            formik.setFieldValue(getName("city", name), "");
+        }
+    }, [country]);
+
     return (
         <Container>
             <h6>{isSender ? "Откуда" : "Куда"}</h6>
