@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormik } from "formik";
 import React, { useState } from "react";
 import { Alert, Button, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,12 +12,19 @@ import OrderForm from "./orderForm";
 const orderSchema = yup.object().shape({
     sender: yup.object().shape(contact.Schema),
     receiver: yup.object().shape(contact.Schema),
-    cargo: yup.object().shape({
-        ...cargo.Sсhema,
-        weight: cargo.Sсhema.when(["sender", "receiver"], {
-            is: (sender, receiver) => sender.city !== "" && receiver.city !== "" && sender.city !== receiver.city,
-            then: (schema) => schema.min(5),
-        }),
+    cargo: yup.object().when(["sender", "receiver"], {
+        is: (sender, receiver) => {
+            console.log("sender", sender);
+            console.log("receiver", receiver);
+            return sender?.city !== "" && receiver?.city !== "" && sender?.city !== receiver?.city;
+        },
+        then: yup
+            .object()
+            .shape({
+                ...cargo.Schema,
+                weight: cargo.Schema.weight.min(5, "Минимальный вес в междугородней отправке 5 кг"),
+            }),
+        otherwise: yup.object().shape({ ...cargo.Schema }),
     }),
     options: yup.object().shape(options.Sсhema),
 });
