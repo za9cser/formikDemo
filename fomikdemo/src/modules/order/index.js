@@ -1,4 +1,4 @@
-import { Form, Formik, useFormikContext } from "formik";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Alert, Button, Col, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,10 +9,10 @@ import Cargo, * as cargo from "./cargo";
 import Options, * as options from "./options";
 
 const orderSchema = yup.object().shape({
-    sender: { ...contact.Schema },
-    receiver: { ...contact.Schema },
-    cargo: { ...cargo.Sсhema },
-    options: { ...options.Sсhema },
+    sender: yup.object().shape(contact.Schema),
+    receiver: yup.object().shape(contact.Schema),
+    cargo: yup.object().shape(cargo.Sсhema),
+    options: yup.object().shape(options.Sсhema),
 });
 
 const initialValues = {
@@ -28,12 +28,19 @@ const Order = () => {
     const [message, setMessage] = useState("");
 
     const handleSubmit = (values, { setSubmitting }) => {
+        console.log("values", values);
         setSubmitting(true);
 
         setShowAlert(false);
         setIsSubmitted(false);
         setTimeout(() => {
-            setMessage(`Создано: ${values.cityFrom} -> ${values.cityTo}`);
+            setMessage(
+                `Создано: <p>${values.sender.country}, ${values.sender.city} -> ${values.receiver.country}, ${
+                    values.receiver.city
+                }</p><p>Вес: ${values.cargo.weight}</p><p>Дата забора: ${
+                    values.options.takeDate?._d.toLocaleDateString() || ""
+                }</p>`
+            );
             setSubmitting(false);
             setShowAlert(true);
             setIsSubmitted(true);
@@ -91,7 +98,7 @@ const Order = () => {
                     </Row>
                     <Row>
                         <Alert isOpen={showAlert} color="success">
-                            {message}
+                            <div dangerouslySetInnerHTML={{ __html: message }} />
                         </Alert>
                     </Row>
                 </Form>

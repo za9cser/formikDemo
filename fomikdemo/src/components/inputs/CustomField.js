@@ -1,19 +1,22 @@
 import { TextField } from "@mui/material";
-import { useField, useFormikContext } from "formik";
+import { useField } from "formik";
 import React from "react";
+import { getName } from "../../utils/utils";
 
-export default function CustomField({ label, required, ...props }) {
-    const [field, meta] = useField({ ...props });
+export default function CustomField({ label, parentName, required, ...props }) {
+    const name = getName(props.name, parentName);
+    const [field, meta] = useField({ ...props, name });
 
     return (
         <TextField
-            label={label}
             {...field}
             {...props}
+            name={name}
+            label={label}
             inputProps={{ autoComplete: "off", pattern: field.pattern }}
-            error={meta.touched && meta.error}
+            error={Boolean(meta.touched && meta.error)}
             color={meta.touched && !meta.error ? "success" : ""}
-            helperText={meta.error}
+            helperText={meta.touched && meta.error}
             required={required}
             size="small"
         />
