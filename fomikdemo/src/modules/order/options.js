@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row } from "reactstrap";
 import CustomDatePicker from "../../components/inputs/CustomDatePicker";
 import * as yup from "yup";
+import moment from "moment";
 
 export default function Options({ name }) {
     return (
@@ -21,4 +22,10 @@ export default function Options({ name }) {
 }
 
 export const InitialValues = { takeDate: moment() };
-export const Sсhema = { takeDate: yup.string().required("Дата забора обязательна") };
+export const Sсhema = {
+    takeDate: yup
+        .date()
+        .nullable()
+        .transform((curr, orig) => (orig === "" ? null : curr))
+        .required("Дата забора обязательна"),
+};

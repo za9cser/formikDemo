@@ -10,17 +10,22 @@ export default function CustomDatePicker({ label, parentName, ...props }) {
 
     return (
         <DatePicker
+            {...field}
             label={label}
             name={name}
             mask="__.__.____"
-            onChange={(newValue) => field.onChange({ target: { name: field.name, value: newValue } })}
+            onChange={(newValue) => {
+                const e = { target: { name: name, value: newValue } };
+                field.onChange(e);
+            }}
             renderInput={(params) => (
                 <TextField
+                    {...field}
                     {...params}
                     {...props}
                     name={name}
                     size="small"
-                    error={meta.touched && meta.error}
+                    error={Boolean(meta.touched && meta.error)}
                     color={meta.touched && !meta.error ? "success" : ""}
                     helperText={meta.touched && meta.error}
                 />

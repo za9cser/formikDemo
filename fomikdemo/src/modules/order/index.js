@@ -34,7 +34,13 @@ const Order = () => {
         setShowAlert(false);
         setIsSubmitted(false);
         setTimeout(() => {
-            setMessage(`Создано: ${values.cityFrom} -> ${values.cityTo}`);
+            setMessage(
+                `Создано: <p>${values.sender.country}, ${values.sender.city} -> ${values.receiver.country}, ${
+                    values.receiver.city
+                }</p><p>Вес: ${values.cargo.weight}</p><p>Дата забора: ${
+                    values.options.takeDate?._d.toLocaleDateString() || ""
+                }</p>`
+            );
             setSubmitting(false);
             setShowAlert(true);
             setIsSubmitted(true);
@@ -92,7 +98,7 @@ const Order = () => {
                     </Row>
                     <Row>
                         <Alert isOpen={showAlert} color="success">
-                            {message}
+                            <div dangerouslySetInnerHTML={{ __html: message }} />
                         </Alert>
                     </Row>
                 </Form>
