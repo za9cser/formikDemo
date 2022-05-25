@@ -18,12 +18,10 @@ const orderSchema = yup.object().shape({
             console.log("receiver", receiver);
             return sender?.city !== "" && receiver?.city !== "" && sender?.city !== receiver?.city;
         },
-        then: yup
-            .object()
-            .shape({
-                ...cargo.Schema,
-                weight: cargo.Schema.weight.min(5, "Минимальный вес в междугородней отправке 5 кг"),
-            }),
+        then: yup.object().shape({
+            ...cargo.Schema,
+            weight: cargo.Schema.weight.min(5, "Минимальный вес в междугородней отправке 5 кг"),
+        }),
         otherwise: yup.object().shape({ ...cargo.Schema }),
     }),
     options: yup.object().shape(options.Sсhema),
@@ -65,9 +63,6 @@ const Order = () => {
         <Formik initialValues={initialValues} validationSchema={orderSchema} onSubmit={handleSubmit}>
             {(formik) => (
                 <Form>
-                    <Row>
-                        <h5>Новый заказ</h5>
-                    </Row>
                     <OrderForm />
 
                     <Row className="my-3 justify-content-around">
