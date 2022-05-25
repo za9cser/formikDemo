@@ -2,8 +2,8 @@ import { connect, useFormikContext } from "formik";
 import React, { useEffect } from "react";
 import { Container, Row } from "reactstrap";
 import * as yup from "yup";
-import CustomField from "../../components/inputs/CustomField";
-import { getName } from "../../utils/utils";
+import CustomField from "../../../components/inputs/CustomField";
+import { getName } from "../../../utils/utils";
 
 const Contact = ({ name, isSender }) => {
     const formik = useFormikContext();

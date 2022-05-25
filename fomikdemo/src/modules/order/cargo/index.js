@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row } from "reactstrap";
-import CustomField from "../../components/inputs/CustomField";
+import CustomField from "../../../components/inputs/CustomField";
 import * as yup from "yup";
 
 export default function Cargo({ name }) {
