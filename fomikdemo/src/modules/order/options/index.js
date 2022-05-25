@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row } from "reactstrap";
-import CustomDatePicker from "../../components/inputs/CustomDatePicker";
+import CustomDatePicker from "../../../components/inputs/CustomDatePicker";
 import * as yup from "yup";
 import moment from "moment";
 
