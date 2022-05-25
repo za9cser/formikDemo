@@ -11,12 +11,13 @@ const template = {
         country: "Россия",
         city: "Санкт-Петербург",
     },
-    sender: {
+    receiver: {
         country: "Армения",
         city: "Ереван",
     },
     cargo: {
         weight: 5,
+        sizes: [{ l: "", w: "", h: "" }],
     },
     options: {
         takeDate: moment("28.05.2022", "dd.MM.yyyy"),

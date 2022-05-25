@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 import { Container, Row } from "reactstrap";
 import * as yup from "yup";
 import CustomField from "../../../components/inputs/CustomField";
-import { getName } from "../../../utils/utils";
+import { getName, getPropValue } from "../../../utils/utils";
 
 const Contact = ({ name, isSender }) => {
     const formik = useFormikContext();
-    const country = formik.values?.getProp("country", name);
-    const city = formik.values?.getProp("city", name);
+    const country = getPropValue(formik.values, "country", name);
+    const city = getPropValue(formik.values, "city", name);
 
     useEffect(() => {
         if (city !== "") {

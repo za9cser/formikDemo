@@ -4,11 +4,11 @@ import CustomField from "../../../components/inputs/CustomField";
 import * as yup from "yup";
 import Size, * as size from "./size";
 import { FieldArray, useFormikContext } from "formik";
-import { getName } from "../../../utils/utils";
+import { getName, getPropValue } from "../../../utils/utils";
 
 export default function Cargo({ name }) {
     const { values } = useFormikContext();
-    const sizes = values.getProp("sizes", name);
+    const sizes = getPropValue(values, "sizes", name);
     return (
         <Container>
             <h6>Груз</h6>

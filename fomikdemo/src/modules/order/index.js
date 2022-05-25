@@ -46,10 +46,11 @@ const Order = () => {
         setShowAlert(false);
         setIsSubmitted(false);
         setTimeout(() => {
+            const sizes = "Габариты: " + values.cargo.sizes.map((s) => `${s.l}x${s.w}x${s.h}см`).join(", ");
             setMessage(
                 `Создано: <p>${values.sender.country}, ${values.sender.city} -> ${values.receiver.country}, ${
                     values.receiver.city
-                }</p><p>Вес: ${values.cargo.weight}</p><p>Дата забора: ${
+                }</p><p>Вес: ${values.cargo.weight}</p><p>${sizes}</p><p>Дата забора: ${
                     values.options.takeDate?._d.toLocaleDateString() || ""
                 }</p>`
             );
