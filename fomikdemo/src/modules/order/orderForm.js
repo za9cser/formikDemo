@@ -43,7 +43,13 @@ export default function OrderForm() {
                     <h5>Новый заказ</h5>
                 </Col>
                 <Col className="text-end">
-                    <Button color="link" onClick={() => formik.setValues(template)}>
+                    <Button
+                        color="link"
+                        onClick={() => {
+                            formik.setValues({ ...template, isBusy: true });
+                            setTimeout(() => formik.setFieldValue("isBusy", false), 500);
+                        }}
+                    >
                         Загрузить из шаблона
                     </Button>
                 </Col>
