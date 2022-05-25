@@ -11,7 +11,7 @@ const Contact = ({ name, isSender }) => {
     const city = getPropValue(formik.values, "city", name);
 
     useEffect(() => {
-        if (city !== "") {
+        if (!formik.values.isBusy && city !== "") {
             formik.setFieldValue(getName("city", name), "");
         }
     }, [country]);
