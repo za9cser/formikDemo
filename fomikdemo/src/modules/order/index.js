@@ -32,6 +32,7 @@ const initialValues = {
     receiver: { ...contact.InitialValues },
     cargo: { ...cargo.InitialValues },
     options: { ...options.InitialValues },
+    isBusy: false,
 };
 
 const Order = () => {
